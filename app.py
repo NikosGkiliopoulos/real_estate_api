@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine
 import os, json, re
 from collections import OrderedDict
+import psycopg2
 
 app = Flask(__name__)
 
