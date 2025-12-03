@@ -1,21 +1,20 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import create_engine
 import os, json, re
 from collections import OrderedDict
-import psycopg2
 
 app = Flask(__name__)
 
 # ----------------------------
 # DATABASE (RENDER POSTGRES)
 # ----------------------------
-
+from dotenv import load_dotenv
+load_dotenv()
 db_url = os.getenv("DATABASE_URL")
 
 # Render gives postgres:// but SQLAlchemy needs postgresql://
 if db_url and db_url.startswith("postgres://"):
-    db_url = db_url.replace("postgres://", "postgresql://", 1)
+    db_url = db_url.replace("postgres://", "postgresql+psycopg://", 1)
 
 app.config['JSON_SORT_KEYS'] = False
 app.config["SQLALCHEMY_DATABASE_URI"] = db_url
